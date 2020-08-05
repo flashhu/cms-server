@@ -6,13 +6,21 @@ const catchError = async (ctx, next) => {
         await next()
     } catch (error) {
         if (error instanceof HttpException) {
-            // 已知错误
+            // 已知异常
             ctx.body = {
                 msg: error.msg,
                 error_code: error.errorCode,
                 request: `${ctx.method} ${ctx.path}`
             }
             ctx.status = error.code
+        }else {
+            // 未知异常
+            ctx.body = {
+                msg: '呆滞 不知道哪抛锚了！',
+                error_code: error.errorCode,
+                request: `${ctx.method} ${ctx.path}`
+            }
+            ctx.status = 500
         }
     }
 }
