@@ -6,8 +6,15 @@ class InitManager {
     static initCore(app) {
         // 入口方法
         InitManager.app = app
+        InitManager.loadConfig()
         InitManager.initLoadRouters()
         // InitManager.loadHttpException()
+    }
+
+    static loadConfig(path = '') {
+        const configPath = path || process.cwd() + '/config/config.js'
+        const config = require(configPath)
+        global.config = config
     }
 
     static initLoadRouters() {
