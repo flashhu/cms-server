@@ -1,5 +1,4 @@
 const Router = require('koa-router')
-const { ParameterException } = require('../../../core/httpException')
 const { PositiveIntegerValidator } = require('../../validators/validator')
 
 const router = new Router()
