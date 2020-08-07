@@ -8,7 +8,8 @@ class User extends Model {
 User.init({
     id: {
         type: Sequelize.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
     nickname: Sequelize.STRING,
     email: Sequelize.STRING,
@@ -17,4 +18,4 @@ User.init({
         type: Sequelize.STRING(64),
         unique: true
     }
-}, { sequelize })
+}, { sequelize, tableName: 'user' })

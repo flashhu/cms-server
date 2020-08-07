@@ -5,12 +5,14 @@ const catchError = async (ctx, next) => {
     try {
         await next()
     } catch (error) {
-
-        if(global.config.env === 'dev') {
+        // 抛出异常： 开发环境 且 不是HttpException
+        const isHttpException = error instanceof HttpException
+        const isDev = global.config.env === 'dev'
+        if (isDev && !isHttpException) {
             throw error
         }
 
-        if (error instanceof HttpException) {
+        if (isHttpException) {
             // 已知异常
             ctx.body = {
                 msg: error.msg,
