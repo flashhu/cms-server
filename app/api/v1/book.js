@@ -4,8 +4,8 @@ const { PositiveIntegerValidator } = require('../../validators/validator')
 
 const router = new Router()
 
-router.post('/v1/:id/book', (ctx, next)=>{
-    const v = new PositiveIntegerValidator().validate(ctx)
+router.post('/v1/:id/book', async (ctx, next)=>{
+    const v = await new PositiveIntegerValidator().validate(ctx)
     const id = v.get('path.id')
     console.log(id, typeof id)
     ctx.body = 'success'
