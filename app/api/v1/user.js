@@ -9,6 +9,10 @@ const router = new Router({
 
 /**
  * 用户注册
+ * @param {string} email 邮箱
+ * @param {string} password1 密码
+ * @param {string} password2 确认密码
+ * @param {string} nickname 昵称
  */
 router.post('/register', async (ctx)=> {
     const v = await new RegisterValidator().validate(ctx)
@@ -17,7 +21,7 @@ router.post('/register', async (ctx)=> {
         password: v.get('body.password1'),
         nickname: v.get('body.nickname')
     }
-    const r = await User.create(user)
+    await User.create(user)
     success()
 })
 

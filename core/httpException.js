@@ -25,8 +25,28 @@ class Success extends HttpException {
     }
 }
 
+class NotFound extends HttpException {
+    constructor(msg, errorCode) {
+        super()
+        this.code = 404
+        this.errorCode = errorCode || 10000
+        this.msg = msg || '资源未找到'
+    }
+}
+
+class AuthFailed extends HttpException {
+    constructor(msg, errorCode) {
+        super()
+        this.code = 401
+        this.errorCode = errorCode || 10004
+        this.msg = msg || '授权失败'
+    }
+}
+
 module.exports = {
     HttpException,
     ParameterException,
-    Success
+    Success,
+    NotFound,
+    AuthFailed
 }
