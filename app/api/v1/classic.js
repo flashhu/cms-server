@@ -6,6 +6,7 @@ const router = new Router({
 })
 
 router.get('/latest', new Auth().m, async (ctx, next) => {
+    // 复杂权限 => 权限分级控制
     ctx.body = ctx.auth
 })
 

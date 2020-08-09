@@ -4,6 +4,7 @@ const { LoginType } = require('../../lib/enum')
 const { User } = require('../../models/user')
 const { ParameterException } = require('../../../core/httpException')
 const { generateToken } = require('../../../core/util')
+const { Auth } = require('../../../middlewares/auth')
 
 const router = new Router({
     prefix: '/v1/token'
@@ -11,7 +12,7 @@ const router = new Router({
 
 async function emailLogin(account, secret) {
     const user = await User.verifyEmailPassword(account, secret)
-    return token = generateToken(user.id, 2)
+    return token = generateToken(user.id, Auth.USER)
 }
 
 /**

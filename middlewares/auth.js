@@ -3,8 +3,11 @@ const jwt = require('jsonwebtoken')
 const { Forbbiden } = require('../core/httpException')
 
 class Auth {
-    constructor() {
-
+    constructor(level) {
+        this.level = level || 1
+        // 用于权限分级 设置scope
+        Auth.USER = 8
+        Auth.ADMIN = 16
     }
 
     // m为属性
@@ -27,6 +30,11 @@ class Auth {
                 if (error.name == 'TokenExpiredError') {
                     errMsg = 'token已过期'
                 }
+                throw new Forbbiden(errMsg)
+            }
+
+            if (this.level > decode.scope) {
+                errMsg = '权限不足'
                 throw new Forbbiden(errMsg)
             }
 
