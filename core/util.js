@@ -40,10 +40,12 @@ const findMembers = function (instance, {
 const generateToken = function(uid, scope){
     const secretKey = global.config.security.secretKey
     const expiresIn = global.config.security.expiresIn
+    // 生成令牌
+    // 1. 可写入内容 2. 有时效性
     const token = jwt.sign({
         uid,
         scope
-    },secretKey,{
+    }, secretKey, {
         expiresIn
     })
     return token
@@ -55,17 +57,3 @@ module.exports = {
     findMembers,
     generateToken,
 }
-
-
-
-// const generateToken = function (uid, scope) {
-//     const secretKey = global.config.security.secretKey
-//     const expiresIn = global.config.security.expiresIn
-//     const token = jwt.sign({
-//         uid,
-//         scope
-//     }, secretKey, {
-//         expiresIn: expiresIn
-//     })
-//     return token
-// }
