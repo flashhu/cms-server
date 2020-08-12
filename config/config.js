@@ -11,5 +11,10 @@ module.exports = {
     security: {
         secretKey: "abcdefg", // 最好用随机字符串
         expiresIn: 60*60*24*30 // 令牌过期时间
+    },
+    wx: {
+        appId: 'wx393f310fe418e8c4',
+        appSecret: '56d30f114368cbae57af0b4cd7003a17',
+        loginUrl: 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code'
     }
 }
