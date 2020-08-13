@@ -63,7 +63,10 @@ User.init({
         type: Sequelize.STRING(64),
         unique: true
     }
-}, { sequelize, tableName: 'user' })
+}, { 
+    sequelize, 
+    tableName: 'user' 
+})
 
 module.exports = {
     User
