@@ -8,6 +8,11 @@ const router = new Router({
     prefix: '/v1/like'
 })
 
+/**
+ * 点赞
+ * @param {number} art_id 对应某一实体的编号 flow表
+ * @param {string} type 实体类型 flow表
+ */
 router.post('/', new Auth().m, async (ctx) => {
     // LikeValidator => alias (L63) 别名 将id的值设成art_id的值
     const v = await new LikeValidator().validate(ctx, {
@@ -17,6 +22,7 @@ router.post('/', new Auth().m, async (ctx) => {
     success() 
 })
 
+// 取消点赞
 router.post('/cancel', new Auth().m, async (ctx) => {
     // LikeValidator => alias (L63) 别名 将id的值设成art_id的值
     const v = await new LikeValidator().validate(ctx, {
