@@ -20,6 +20,10 @@ const sequelize = new Sequelize(dbName, user, password, {
         updatedAt: 'updated_at',
         deletedAt: 'deleted_at',
         underscored: true,        // 自动将驼峰转下划线
+        // 排除返回结果中的某些字段的方法：
+        // 1. 返回结果后，删除字段
+        // 2. 查询时去除部分字段  => 此处使用scope
+        // 3. JSON序列化时，部分字段不序列化
         scopes: {                 // 全局预先定义
             hideTime: {           // 查询结果去除三个操作时间的字段
                 attributes: {
