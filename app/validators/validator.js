@@ -1,6 +1,7 @@
 const { LinValidator, Rule } = require('../../core/lin-validator-v2')
 const { User } = require('../models/user')
 const { LoginType } = require('../lib/enum')
+const { extend } = require('lodash')
 
 class PositiveIntegerValidator extends LinValidator {
     constructor() {
@@ -85,9 +86,27 @@ class NotEmptyValidator extends LinValidator {
     }
 }
 
+// ?
+function checkType(vals) {
+    if (!vals.body.type) {
+        throw new Error('type必须为参数')
+    }
+    if (!LoginType.isThisType(vals.body.type)) {
+        throw new Error('type参数不合法')
+    }
+}
+
+class LikeValidator extends PositiveIntegerValidator {
+    constructor() {
+        super()
+        this.validateType = checkType
+    }
+}
+
 module.exports = {
     PositiveIntegerValidator,
     RegisterValidator,
     TokenValidator,
-    NotEmptyValidator
+    NotEmptyValidator,
+    LikeValidator
 }

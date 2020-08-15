@@ -52,11 +52,31 @@ class Forbbiden extends HttpException {
     }
 }
 
+class LikeError extends HttpException {
+    constructor() {
+        super()
+        this.code = 400
+        this.errorCode = 60001
+        this.msg = '用户已点赞'
+    }
+}
+
+class DislikeError extends HttpException {
+    constructor() {
+        super()
+        this.code = 400
+        this.errorCode = 60002
+        this.msg = '用户未点赞'
+    }
+}
+
 module.exports = {
     HttpException,
     ParameterException,
     Success,
     NotFound,
     AuthFailed,
-    Forbbiden
+    Forbbiden,
+    LikeError,
+    DislikeError
 }

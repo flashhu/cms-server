@@ -44,7 +44,7 @@ const generateToken = function(uid, scope){
     // 1. 可写入内容 2. 有时效性
     const token = jwt.sign({
         uid,
-        scope
+        scope  // 用户权限等级
     }, secretKey, {
         expiresIn
     })

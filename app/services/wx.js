@@ -32,7 +32,7 @@ class WXManager {
         }
 
         // 3. 返回token
-        return generateToken(user.isSoftDeleted, Auth.USER)
+        return generateToken(user.id, Auth.USER)
     }
 }
 

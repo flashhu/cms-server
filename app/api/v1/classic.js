@@ -7,6 +7,7 @@ const router = new Router({
     prefix: '/v1/classic'
 })
 
+// 获取最新期刊 - 所有用户
 router.get('/latest', new Auth().m, async (ctx, next) => {
     const flow = await Flow.findOne({
         order: [
