@@ -32,7 +32,7 @@ class Favor extends Model {
                 type, 
                 uid 
             }, {transaction: t})
-            const art = await Art.getData(art_id, type)
+            const art = await Art.getData(art_id, type, false)
             // 注意此处 {transaction: t} 的位置
             await art.increment('fav_nums', { by: 1, transaction: t })
         })
@@ -62,7 +62,7 @@ class Favor extends Model {
                 force: false,
                 transaction: t 
             })
-            const art = await Art.getData(art_id, type)
+            const art = await Art.getData(art_id, type, false)
             // 注意此处 {transaction: t} 的位置
             await art.decrement('fav_nums', { by: 1, transaction: t })
         })

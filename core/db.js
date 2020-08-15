@@ -19,7 +19,14 @@ const sequelize = new Sequelize(dbName, user, password, {
         createdAt: 'created_at',  // 更名为符合Mysql的命名规则
         updatedAt: 'updated_at',
         deletedAt: 'deleted_at',
-        underscored: true         //  自动将驼峰转下划线
+        underscored: true,        // 自动将驼峰转下划线
+        scopes: {                 // 全局预先定义
+            hideTime: {           // 查询结果去除三个操作时间的字段
+                attributes: {
+                    exclude: ['updated_at', 'deleted_at', 'created_at']
+                }
+            }
+        }
     }
 })
 
