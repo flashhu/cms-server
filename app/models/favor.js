@@ -1,7 +1,7 @@
-const { Sequelize, Model } = require('sequelize')
+const { Sequelize, Model, Op } = require('sequelize')
 const { sequelize } = require('../../core/db')
 const { Art } = require('./art')
-const { LikeError,  DislikeError } = require('../../core/httpException') 
+const { LikeError, DislikeError, NotFound } = require('../../core/httpException') 
 
 class Favor extends Model {
     // 业务表
@@ -79,6 +79,27 @@ class Favor extends Model {
         })
 
         return favor ? true : false
+    }
+
+    // 某用户点赞了哪些期刊
+    static async getMyClassicFavors(uid) {
+        const arts = await Favor.findAll({
+            where: {
+                uid: uid,
+                // type != 400
+                type: {
+                    // key 为字符串
+                    // [] 中可以为表达式
+                    [Op.not]: 400
+                }
+            }
+        })
+
+        if(!arts) {
+            throw new NotFound()
+        }
+
+        return await Art.getList(arts)
     }
 }
 

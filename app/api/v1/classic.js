@@ -79,4 +79,11 @@ router.get('/:type/:id/favor', new Auth().m, async (ctx) => {
     }
 })
 
+// 获取用户喜欢的期刊
+router.get('/favor', new Auth().m, async ctx => {
+    const uid = ctx.auth.uid
+    const arts = await Favor.getMyClassicFavors(uid)
+    ctx.body = arts
+})
+
 module.exports = router
