@@ -63,7 +63,26 @@ router.get('/:index/prev', new Auth().m, async (ctx, next) => {
     ctx.body = await flowToArt(flow.art_id, flow.type, ctx.auth.uid, flow.index)
 })
 
-// 获得点赞信息 - 所有用户
+// 获得某期刊信息 - 所有用户
+router.get('/:type/:id', new Auth().m, async (ctx) => {
+    const v = await new ClassicValidator().validate(ctx)
+    const id = v.get('path.id')
+    const type = parseInt(v.get('path.type'))
+    
+    const artDetail = await new Art(id, type).getDetail(ctx.auth.uid)
+    const flow = await Flow.findOne({
+        where: {
+            art_id: id,
+            type
+        }
+    })
+    
+    artDetail.art.setDataValue('like_status', artDetail.like_status)
+    artDetail.art.setDataValue('index', flow.index)
+    ctx.body = artDetail.art
+})
+
+// 获取某次期刊的点赞信息 - 所有用户
 router.get('/:type/:id/favor', new Auth().m, async (ctx) => {
     const v = await new ClassicValidator().validate(ctx)
     const id = v.get('path.id')

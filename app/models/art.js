@@ -1,8 +1,32 @@
 const { Op } = require('sequelize')
-const { Movie, Music, Sentence } = require('./classic')
 const { flatten } = require('lodash')
+const { Movie, Music, Sentence } = require('./classic')
 
 class Art {
+    constructor(art_id, type) {
+        // 决定对象特征的参数
+        this.art_id = art_id
+        this.type = type
+    }
+
+    // 属性操作 new Art.detail
+    // get datail() {}
+
+    // 实例方法 new Art.getDetail()
+    // 较灵活的参数通过方法传递
+    async getDetail(uid) { 
+        const { Favor } = require('./favor')
+        const art = await Art.getData(this.art_id, this.type)
+        if (!art) {
+            throw new NotFound()
+        }
+        const like = await Favor.uerLikeIt(this.art_id, this.type, uid)
+        return {
+            art, 
+            like_status: like
+        }
+    }
+
     // 使用scope后, 对结果进行修改，会报错
     static async getData(art_id, type, useScope=true) {
         let art = null
