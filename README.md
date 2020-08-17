@@ -71,3 +71,4 @@
 * 如果导入出现`undefined`，检查是否出现循环导入
 * 出现循环导入，由模块导入，变为局部导入
 * `forEach `中别用 `async`, `await`
+* `axios`请求中有中文，会报错，需要编码，如`encodeURI`

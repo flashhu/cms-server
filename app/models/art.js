@@ -99,15 +99,15 @@ class Art {
         switch (type) {
             case 100:
                 // movie
-                arts = await Movie.scope(scope).findOne(finder)
+                arts = await Movie.scope(scope).findAll(finder)
                 break;
             case 200:
                 // music
-                arts = await Music.scope(scope).findOne(finder)
+                arts = await Music.scope(scope).findAll(finder)
                 break;
             case 300:
                 // sentence
-                arts = await Sentence.scope(scope).findOne(finder)
+                arts = await Sentence.scope(scope).findAll(finder)
                 break;
             case 400:
                 break;
