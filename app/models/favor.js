@@ -24,6 +24,10 @@ class Favor extends Model {
             throw new LikeError()
         }
 
+        // todo 点赞书籍：
+        // console.log('-------------', art_id, type, uid);
+        // INSERT INTO `favor` (`id`,`uid`,`art_id`,`type`,`created_at`,`updated_at`) VALUES (DEFAULT,?,?,?,?,?); 
+
         // * sequelize.transaction + 回调函数
         // * {transaction: t}
         sequelize.transaction(async t => {

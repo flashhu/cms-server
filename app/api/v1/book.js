@@ -1,17 +1,14 @@
 const Router = require('koa-router')
-const { PositiveIntegerValidator } = require('../../validators/validator')
+const { Auth } = require('../../../middlewares/auth')
+const { HotBook } = require('../../models/hot-book')
 
-const router = new Router()
-
-router.post('/v1/:id/book', async (ctx, next)=>{
-    const v = await new PositiveIntegerValidator().validate(ctx)
-    const id = v.get('path.id')
-    console.log(id, typeof id)
-    ctx.body = 'success'
-    // if(true) {
-    //     const error = new ParameterException()
-    //     throw error
-    // }
+const router = new Router({
+    prefix: '/v1/book'
 })
 
-module.exports =  router
+router.get('/hot', new Auth().m, async (ctx) => {
+    const books = await HotBook.getAll()
+    ctx.body = books
+})
+
+module.exports =  router 
