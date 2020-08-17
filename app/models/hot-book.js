@@ -5,7 +5,7 @@ const favor = require('./favor')
 
 class HotBook extends Model {
     static async getAll() {
-        const books = await HotBook.findAll({
+        const books = await HotBook.scope('hideTime').findAll({
             order: [
                 'index'
             ]
@@ -18,7 +18,7 @@ class HotBook extends Model {
         })
 
         // 点赞信息 [{art_id: 1120, count: 1}]
-        const favors = await Favor.findAll({
+        const favors = await Favor.scope('hideTime').findAll({
             where: {
                 art_id: {
                     [Op.in]: ids
@@ -52,7 +52,7 @@ class HotBook extends Model {
 }
 
 HotBook.init({
-    index: Sequelize.INTEGER,
+    index: Sequelize.INTEGER, //用于排序
     image: Sequelize.STRING,
     author: Sequelize.STRING,
     title: Sequelize.STRING
