@@ -158,6 +158,13 @@ class SearchValidator extends LinValidator {
     }
 }
 
+class AddCommentValidator extends PositiveIntegerValidator {
+    constructor() {
+        super()
+        this.content = [new Rule('isLength', '评论长度需为1~15位', { min: 1, max: 15 })]
+    }
+}
+
 module.exports = {
     PositiveIntegerValidator,
     RegisterValidator,
@@ -165,5 +172,6 @@ module.exports = {
     NotEmptyValidator,
     LikeValidator,
     ClassicValidator,
-    SearchValidator
+    SearchValidator,
+    AddCommentValidator
 }

@@ -3,7 +3,9 @@ const { Auth } = require('../../../middlewares/auth')
 const { HotBook } = require('../../models/hot-book')
 const { Book } = require('../../models/book')
 const { Favor } = require('../../models/favor')
-const { PositiveIntegerValidator, SearchValidator } = require('../../validators/validator')
+const { Comment } = require('../../models/comment')
+const { PositiveIntegerValidator, SearchValidator, AddCommentValidator } = require('../../validators/validator')
+const { success } = require('../../lib/helper')
 
 const router = new Router({
     prefix: '/v1/book'
@@ -40,6 +42,23 @@ router.get('/:book_id/favor', new Auth().m, async (ctx) => {
         id: 'book_id'
     })
     ctx.body = await Favor.getBookFavor(ctx.auth.uid, v.get('path.book_id'))
+})
+
+// 添加短评
+router.post('/add/comment', new Auth().m, async (ctx) => {
+    const v = await new AddCommentValidator().validate(ctx, {
+        id: 'book_id'
+    })
+    await Comment.addComment(v.get('body.book_id'), v.get('body.content'))
+    success()
+})
+
+// 获取某本书对应的短评
+router.get('/:book_id/comment', new Auth().m, async ctx =>{
+    const v = await new PositiveIntegerValidator().validate(ctx, {
+        id: 'book_id'
+    })
+    ctx.body = await Comment.getComment(v.get('path.book_id'))
 })
 
 module.exports =  router 
