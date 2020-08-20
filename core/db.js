@@ -1,4 +1,5 @@
-const Sequelize = require('sequelize')
+const { Sequelize, Model } = require('sequelize')
+const { unset, clone, isArray } = require('lodash')
 const {
     dbName,
     host,
@@ -23,7 +24,7 @@ const sequelize = new Sequelize(dbName, user, password, {
         // 排除返回结果中的某些字段的方法：
         // 1. 返回结果后，删除字段
         // 2. 查询时去除部分字段  => 此处使用scope
-        // 3. JSON序列化时，部分字段不序列化
+        // 3. JSON序列化时，部分字段不序列化 => 见comment中的toJSON, 下文的toJSON
         scopes: {                 // 全局预先定义
             hideTime: {           // 查询结果去除三个操作时间的字段
                 attributes: {
@@ -36,6 +37,21 @@ const sequelize = new Sequelize(dbName, user, password, {
 
 // Sync all defined models to the DB.
 sequelize.sync({ force: false })
+
+Model.prototype.toJSON = function () {
+    let data = clone(this.dataValues)
+    unset(data, 'updated_at')
+    unset(data, 'deleted_at')
+    unset(data, 'created_at')
+
+    if(isArray(this.exclude)) {
+        this.exclude.forEach((value)=>{
+            unset(data, value)
+        })
+    }
+
+    return data
+}
 
 module.exports = {
     sequelize

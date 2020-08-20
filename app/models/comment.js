@@ -32,7 +32,22 @@ class Comment extends Model {
             })
         }
     }
+
+    // 实例方法
+    // toJSON 不能传参
+    // toJSON() {
+    //     // this => 对象
+    //     // this.dataValues 可得到全部字段
+    //     return {
+    //         content: this.getDataValue('content'),
+    //         nums: this.getDataValue('nums')
+    //     }
+    // }
 }
+
+// 原型定义 => 写死 ×
+// 在API内定义
+// Comment.prototype.exclude = ['book_id', 'id']
 
 Comment.init({
     content: Sequelize.STRING(15),
