@@ -61,4 +61,22 @@ router.get('/:book_id/comment', new Auth().m, async ctx =>{
     ctx.body = await Comment.getComment(v.get('path.book_id'))
 })
 
+
+// 热门搜索
+router.get('/hot-keyword', new Auth().m, async ctx => {
+    // 热搜 看频率 不看总数
+    // 一部分参考算法 + 人工编辑
+    ctx.body = {
+        'hot': [
+            'Python',
+            '哈利·波特',
+            '村上春树',
+            '东野圭吾',
+            '白夜行',
+            '韩寒',
+            '金庸',
+            '王小波'
+        ]
+    }
+})
 module.exports =  router 
